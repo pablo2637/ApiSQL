@@ -1,12 +1,12 @@
 const {
-    getEntries,
-    createEntry,
-    updateEntry,
-    deleteEntry } = require('../models/entriesModel')
+    getAuthors,
+    createAuthor,
+    updateAuthor,
+    deleteAuthor } = require('../models/authorsModel');
 
-const getEntriesC = async ({ body }, res) => {
+const getAuthorsC = async ({ body }, res) => {
     try {
-        const data = await getEntries(body.email);
+        const data = await getAuthors(body.email);
 
         if (!data.ok) res.status(500).json(data);
         else res.status(200).json(data);
@@ -14,16 +14,16 @@ const getEntriesC = async ({ body }, res) => {
     } catch (e) {
         res.status(500).json({
             ok: false,
-            msg: 'Error getEntriesC',
+            msg: 'Error getAuthorsC',
             body,
             error: e
         });
     }
 }
 
-const createEntryC = async ({ body }, res) => {
+const createAuthorC = async ({ body }, res) => {
     try {
-        const response = await createEntry(body);
+        const response = await createAuthor(body);
 
         res.status(200).json({
             ok: true,
@@ -32,16 +32,17 @@ const createEntryC = async ({ body }, res) => {
     } catch (e) {
         res.status(500).json({
             ok: false,
-            msg: 'Error createEntryC',
+            msg: 'Error createAuthorC',
             body,
             error: e
         });
     }
 }
 
-const updateEntryC = async ({ body, params }, res) => {
+
+const updateAuthorC = async ({ body, params }, res) => {
     try {
-        const response = await updateEntry(body, params.id);
+        const response = await updateAuthor(body, params.id);
 
         if (!response.ok) res.status(500).json(response);
         else res.status(200).json(response);
@@ -49,7 +50,7 @@ const updateEntryC = async ({ body, params }, res) => {
     } catch (e) {
         res.status(500).json({
             ok: false,
-            msg: 'Error updateEntryC',
+            msg: 'Error updateAuthorC',
             body,
             params,
             error: e
@@ -57,9 +58,9 @@ const updateEntryC = async ({ body, params }, res) => {
     }
 }
 
-const deleteEntryC = async ({ params }, res) => {
+const deleteAuthorC = async ({ params }, res) => {
     try {
-        const response = await deleteEntry(params.id)
+        const response = await deleteAuthor(params.id);
 
         if (!response.ok) res.status(500).json(response);
         else res.status(200).json(response);
@@ -67,16 +68,16 @@ const deleteEntryC = async ({ params }, res) => {
     } catch (e) {
         res.status(500).json({
             ok: false,
-            msg: 'Error deleteEntryC',
+            msg: 'Error deleteAuthorC',
             params,
             error: e
-        })
+        });
     }
 }
 
 module.exports = {
-    getEntriesC,
-    createEntryC,
-    updateEntryC,
-    deleteEntryC
+    getAuthorsC,
+    createAuthorC,
+    updateAuthorC,
+    deleteAuthorC
 }

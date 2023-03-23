@@ -8,22 +8,22 @@ const pool = new Pool({
     password: 'admin'
 })
 
-//Accede a todas las entradas o si se especifica, las que coincidan con el email
-const getEntries = async (email) => {
+//Acceder a los autores por email
+const getAuthors = async (email) => {
     let client, rslt, data;
     try {
         client = await pool.connect();
 
-        if (email) data = await client.query(queries.getEntriesByEmail, [email]);
-        else data = await client.query(queries.getAllEntries);
+        if (email) data = await client.query(queries.getAuthorByEmail, [email]);
+        else data = await client.query(queries.getAllAuthors);
 
         rslt = data.rows;
     } catch (e) {
-        throw error
+        throw e
     } finally {
         client.release();
     }
-    
+
     if (data.rows == 0) return {
         ok: true,
         msg: 'No se encontraron registros'
@@ -33,11 +33,11 @@ const getEntries = async (email) => {
 }
 
 //Crear una entrada
-const createEntry = async ({ title, content, category, email }) => {
+const createAuthor = async ({ name, surname, email, image }) => {
     let client, rslt;
     try {
         client = await pool.connect();
-        rslt = await client.query(queries.createEntry, [title, content, email, category]);
+        rslt = await client.query(queries.createAuthor, [name, surname, email, image]);
 
     } catch (e) {
         throw e
@@ -49,11 +49,11 @@ const createEntry = async ({ title, content, category, email }) => {
 }
 
 //Actualizar una entrada
-const updateEntry = async ({ title, content, category }, id) => {
+const updateAuthor = async ({ name, surname, email, image }, id) => {
     let client, rslt;
     try {
         client = await pool.connect();
-        rslt = await client.query(queries.updateEntry, [title, content, category, id]);
+        rslt = await client.query(queries.updateAuthor, [name, surname, email, image, id]);
         
     } catch (e) {
         throw e
@@ -77,12 +77,12 @@ const updateEntry = async ({ title, content, category }, id) => {
 }
 
 //Eliminar una entrada
-const deleteEntry = async (id) => {
+const deleteAuthor = async (id) => {
     let client, rslt;
     try {
         client = await pool.connect();
-        rslt = await client.query(queries.deleteEntry, [id]);
-        
+        rslt = await client.query(queries.deleteAuthor, [id]);
+
     } catch (e) {
         throw e
     } finally {
@@ -104,10 +104,9 @@ const deleteEntry = async (id) => {
     };
 }
 
-
 module.exports = {
-    getEntries,
-    createEntry,
-    updateEntry,
-    deleteEntry
+    getAuthors,
+    createAuthor,
+    updateAuthor,
+    deleteAuthor
 }
