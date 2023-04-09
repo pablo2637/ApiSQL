@@ -33,7 +33,10 @@ const getEntries = async (email) => {
             msg: 'No se encontraron registros'
         };
 
-    return rslt;
+    return {
+        ok: true,
+        response: rslt
+    };
 
 };
 
@@ -57,7 +60,7 @@ const createEntry = async ({ title, content, category, email }) => {
 
     };
 
-    return `Registros insertados: ${rslt.rowCount}`;
+    return rslt.rows[0];
 
 };
 
@@ -84,7 +87,7 @@ const updateEntry = async ({ title, content, category }, id) => {
     if (rslt.rowCount == 0)
         return {
             ok: false,
-            data: {
+            response: {
                 msg: 'Fallo al intentar modificar el registro.',
                 id,
                 rslt
@@ -93,7 +96,7 @@ const updateEntry = async ({ title, content, category }, id) => {
 
     return {
         ok: true,
-        msg: `Registros modificados: ${rslt.rowCount}`
+        response: rslt.rows[0]
     };
 
 };

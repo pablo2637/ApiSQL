@@ -2,10 +2,10 @@ const { Pool } = require('pg')
 
 
 const pool = new Pool({
-    host: POSTGRESQL_HOST,
-    user: POSTGRESQL_USER,
-    database: POSTGRESQL_DATABASE,
-    password: POSTGRESQL_PASSWORD
+    host: process.env.ELEPHANT_HOST,
+    user: process.env.ELEPHANT_USER,
+    database: process.env.ELEPHANT_DB,
+    password: process.env.ELEPHANT_PASS,
 });
 
 

@@ -9,14 +9,16 @@ const queries = {
                         WHERE email = $1;`,
 
     createAuthor: ` INSERT INTO authors (name, surname, email, image)
-                            VALUES ($1, $2, $3, $4);`,
+                            VALUES ($1, $2, $3, $4)
+                        RETURNING *;`,
 
     updateAuthor: ` UPDATE authors 
                         SET name = ($1),
                             surname = ($2),
                             email = ($3),
                             image = ($4)
-                    WHERE id_author = ($5);`,
+                    WHERE id_author = ($5)
+                    RETURNING *;`,
 
     deleteAuthor: ` DELETE FROM authors 
                     WHERE id_author = ($1);`,
@@ -38,13 +40,15 @@ const queries = {
     createEntry: `  INSERT INTO entries(title, content, id_author, category)
                                     VALUES ($1, $2, (SELECT id_author 
                                                         FROM authors 
-                                                    WHERE email=$3), $4);`,
+                                                    WHERE email=$3), $4)
+                        RETURNING *;`,
 
     updateEntry: ` UPDATE entries 
                         SET title = ($1),
                             content = ($2),
                             category = ($3)
-                    WHERE id_entry = ($4);`,
+                    WHERE id_entry = ($4)
+                    RETURNING *;`,
 
     deleteEntry: `  DELETE FROM entries 
                     WHERE id_entry = ($1);`

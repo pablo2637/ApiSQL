@@ -57,7 +57,7 @@ const createAuthor = async ({ name, surname, email, image }) => {
 
     };
 
-    return `Registros insertados: ${rslt.rowCount}`;
+    return rslt.rows[0];
 
 };
 
@@ -84,7 +84,7 @@ const updateAuthor = async ({ name, surname, email, image }, id) => {
     if (rslt.rowCount == 0)
         return {
             ok: false,
-            data: {
+            response: {
                 msg: 'Fallo al intentar modificar el registro.',
                 id,
                 rslt
@@ -93,7 +93,7 @@ const updateAuthor = async ({ name, surname, email, image }, id) => {
 
     return {
         ok: true,
-        msg: `Registros modificados: ${rslt.rowCount}`
+        response: rslt.rows[0]
     };
 
 };
@@ -121,7 +121,7 @@ const deleteAuthor = async (id) => {
     if (rslt.rowCount == 0)
         return {
             ok: false,
-            data: {
+            response: {
                 msg: 'Fallo al intentar eliminar  el registro.',
                 id,
                 rslt
